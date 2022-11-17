@@ -32,11 +32,11 @@
   
   Вот так я планирую вызывать фукнцию, которую Вы напишите (назоваите функцию task)
 
-        import task3
+      import task3
 
-        reference = [[1,3],[2,3,4,5],[1],[4,5],[2,3,4,5]]
+      reference = [[1,3],[2,3,4,5],[1],[4,5],[2,3,4,5]]
 
-        with open('data.csv') as file:
+      with open('data.csv') as file:
         csvString = file.read()
         result = task3.task(csvString)
         print(result == reference)
