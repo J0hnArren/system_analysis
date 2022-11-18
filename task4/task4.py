@@ -11,31 +11,33 @@ def relation_2(arr):
     return [x[1] for x in arr]
 
 
+def relation_345(func):
+    def wrapped(*args):
+        params = func(*args)
+        arr = params[-1]
+        new_arr = []
+        for i in range(len(arr)):
+            for j in range(len(arr)):
+                if i != j and arr[i][params[0]] == arr[j][params[1]]:
+                    new_arr.append(arr[i][params[2]])
+        return new_arr
+
+    return wrapped
+
+
+@relation_345
 def relation_3(arr):
-    new_arr = []
-    for i in range(len(arr)):
-        for j in range(len(arr)):
-            if i != j and arr[i][1] == arr[j][0]:
-                new_arr.append(arr[i][0])
-    return new_arr
+    return 1, 0, 0, arr
 
 
+@relation_345
 def relation_4(arr):
-    new_arr = []
-    for i in range(len(arr)):
-        for j in range(len(arr)):
-            if i != j and arr[i][0] == arr[j][1]:
-                new_arr.append(arr[i][1])
-    return new_arr
+    return 0, 1, 1, arr
 
 
+@relation_345
 def relation_5(arr):
-    new_arr = []
-    for i in range(len(arr)):
-        for j in range(len(arr)):
-            if i != j and arr[i][0] == arr[j][0]:
-                new_arr.append(arr[i][1])
-    return new_arr
+    return 0, 0, 1, arr
 
 
 def entropy(p):
@@ -68,7 +70,7 @@ def task(*args):
         vertex.update(x)
     vertex = list(vertex)
 
-    res_arr = [[] for i in vertex]  # результат
+    res_arr = [[] for _ in vertex]  # результат
 
     for v in vertex:
         res_arr[int(v) - 1].append(arr1.count(v))
@@ -78,9 +80,11 @@ def task(*args):
         res_arr[int(v) - 1].append(arr5.count(v))
 
     # Проверка на правильность отношений
-    for i in range(len(args[1:])):
-        assert res_arr[i] == args[i+1]
+    if len(args) > 1:
+        for i in range(len(args[1:])):
+            assert res_arr[i] == args[i+1]
 
+    # Вычисление энтропии
     H = 0
     for i in range(len(vertex)):
         for j in range(len(vertex)):
