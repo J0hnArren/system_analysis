@@ -3,15 +3,7 @@ from math import log
 import csv
 
 
-def relation_1(arr):
-    return [x[0] for x in arr]
-
-
-def relation_2(arr):
-    return [x[1] for x in arr]
-
-
-def relation_345(func):
+def complex_relation(func):
     def wrapped(*args):
         params = func(*args)
         arr = params[-1]
@@ -25,23 +17,37 @@ def relation_345(func):
     return wrapped
 
 
-@relation_345
+def relation_1(arr):
+    """прямое управление"""
+    return [x[0] for x in arr]
+
+
+def relation_2(arr):
+    """прямое подчинение"""
+    return [x[1] for x in arr]
+
+
+@complex_relation
 def relation_3(arr):
+    """косвенное управление"""
     return 1, 0, 0, arr
 
 
-@relation_345
+@complex_relation
 def relation_4(arr):
+    """косвенное подчинение"""
     return 0, 1, 1, arr
 
 
-@relation_345
+@complex_relation
 def relation_5(arr):
+    """соподчинение"""
     return 0, 0, 1, arr
 
 
 def entropy(p):
-    return - (p * log(p, 2))
+    """формула энтропии"""
+    return -(p * log(p, 2))
 
 
 def task(*args):
